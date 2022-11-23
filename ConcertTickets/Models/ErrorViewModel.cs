@@ -1,6 +1,4 @@
-using System;
-
-namespace ConcertTickets.Models
+namespace ConcertTickets
 {
     public class ErrorViewModel
     {
