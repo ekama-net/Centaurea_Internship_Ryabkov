@@ -4,7 +4,7 @@ namespace ConcertTickets
 {
     public class AppDbContext : DbContext
     {
-        DbSet<Concert> Concerts { get; set; }
+        public DbSet<Concert> Concerts { get; set; }
         public DbSet<ClassicalConcert> ClassicalConcerts { get; set; }
         public DbSet<OpenAirConcert> OpenAirConcerts { get; set; }
         public DbSet<PartyConcert> PartyConcerts { get; set; }

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Concert>
+
+@{
+    ViewData["Title"] = "Concert Page";
+}
+
+<div class="row">
+    <div class = "col-md-8 offset-md-2">
+        <table class = "table">
+            <thead>
+                <tr>    
+                    <th>@Html.DisplayNameFor(model => model.GroupOrArtistName)</th>
+                    <th>@Html.DisplayNameFor(model => model.EventDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.EventPlace)</th>
+                    <th>@Html.DisplayNameFor(model => model.ImageURL)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>    
+                        <td>@item.GroupOrArtistName</td>
+                        <td>@item.EventDate</td>
+                        <td>@item.EventPlace</td>
+                        <td>@item.ImageURL</td>
+                        @*TODO: make CRUD panel with bootstrap icons*@
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
