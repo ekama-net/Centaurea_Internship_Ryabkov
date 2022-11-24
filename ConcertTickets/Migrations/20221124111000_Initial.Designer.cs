@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertTickets.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221123200213_Initial")]
+    [Migration("20221124111000_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

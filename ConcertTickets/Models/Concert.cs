@@ -2,8 +2,7 @@
 
 namespace ConcertTickets
 {
-    //TODO: maybe need to make it as abstract
-    public class Concert 
+    public abstract class Concert 
     {
         public int ConcertId { get; set; }
         public string GroupOrArtistName { get; set; }

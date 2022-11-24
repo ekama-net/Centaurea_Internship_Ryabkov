@@ -26,7 +26,7 @@ namespace ConcertTickets.Migrations
                     СomposerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HeadLiner = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HowToGetTo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AgeLimit = table.Column<int>(type: "int", nullable: true)
+                    AgeLimitt = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertTickets.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221123200413_ConfigureFields")]
-    partial class ConfigureFields
+    [Migration("20221124113441_RenameField")]
+    partial class RenameField
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
