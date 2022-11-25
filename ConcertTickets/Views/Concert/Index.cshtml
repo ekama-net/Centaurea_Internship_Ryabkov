@@ -5,29 +5,64 @@
 }
 
 <div class="row">
-    <div class = "col-md-8 offset-md-2">
-        <table class = "table">
-            <thead>
-                <tr>    
-                    <th>@Html.DisplayNameFor(model => model.GroupOrArtistName)</th>
-                    <th>@Html.DisplayNameFor(model => model.EventDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.EventPlace)</th>
-                    <th>@Html.DisplayNameFor(model => model.ImageURL)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var item in Model)
-                {
-                    <tr>    
-                        <td>@item.GroupOrArtistName</td>
-                        <td>@item.EventDate</td>
-                        <td>@item.EventPlace</td>
-                        <td>@item.ImageURL</td>
-                        @*TODO: make CRUD panel with bootstrap icons*@
-                    </tr>
-                }
+    @foreach(var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.GroupOrArtistName
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin")) @*TODO: admin panel*@
+                                    {
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.ConcertId"><i class="bi bi-pencil-square"></i></a>
+                                    }
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="@item.ImageURL" width="100%" alt="@item.GroupOrArtistName">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-text"><b>Place: </b>@item.EventPlace</p>
+                            <p class="card-text"><b>Date: </b>@item.EventDate</p>
+                            @*TODO: Add other categories (depends of type)*@
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                @if (item.TicketsCount >0)
+                                {
+                                    <span class="badge bg-success text-white">Tickets Left: @item.TicketsCount</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger text-white">Sold out</span>
+                                }
+                            </p>
 
-            </tbody>
-        </table>
-    </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.ConcertId">
+                                    <i class="bi bi-eye-fill"></i> Show Details
+                                </a>
+                                @*TODO: make orders*@
+                               <a class="btn btn-success text-white @((DateTime.Now > item.EventDate)||(item.TicketsCount<1) ? "disabled" : "")"  
+                                   asp-controller="Orders" 
+                                   asp-action="AddItemToShoppingCart" 
+                                   asp-route-id="@item.ConcertId">
+                                <i class="bi bi-cart-plus"></i> Add to Cart (@item.Price.ToString("c"))</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>
