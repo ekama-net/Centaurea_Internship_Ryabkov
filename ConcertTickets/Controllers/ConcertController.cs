@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ConcertTickets
 {
     public class ConcertController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IConcertService _service;
 
-        public ConcertController(AppDbContext context)
+        public ConcertController(IConcertService service)
         {
-            _context = context;
+            _service = service;
         }
         public async Task<IActionResult> Index()
         {
-            var data = await _context.Concerts.ToListAsync();
+            var data = await _service.GetAll();
             return View(data);
         }
     }

@@ -20,6 +20,8 @@ namespace ConcertTickets
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IConcertService, ConcertService>();
+
             services.AddControllersWithViews();
         }
 
