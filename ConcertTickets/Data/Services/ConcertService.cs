@@ -15,7 +15,8 @@ namespace ConcertTickets
         }
         public void Add(Concert concert)
         {
-            
+            _context.Concerts.Add(concert);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)

@@ -16,5 +16,21 @@ namespace ConcertTickets
             var data = await _service.GetAll();
             return View(data);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("GroupOrArtistName,TicketsCount,EventDate,EventPlace,Price,Description,ImageURL,AgeLimit")] PartyConcert partyConcert)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(partyConcert);
+            }
+            _service.Add(partyConcert);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
