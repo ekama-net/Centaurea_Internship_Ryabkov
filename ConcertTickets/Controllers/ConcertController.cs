@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ConcertTickets
 {
+        //[Authorize(Roles = UserRoles.Admin)]
+        //[AllowAnonymous] TODO: Create Authorisation 
     public class ConcertController : Controller
     {
         private readonly IConcertService _service;
@@ -17,12 +20,23 @@ namespace ConcertTickets
             return View(data);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Filter(string searchString)
         {
-            return View();
+            var data = await _service.GetAll();
+            var concerts = from m in data
+                         select m;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                concerts = concerts.Where(s => s.GroupOrArtistName!.ToUpper().Contains(searchString.ToUpper()));
+            }
+
+            return View(concerts);
         }
 
-        [HttpPost]
+
+
+        [HttpPost] //TODO: contunue after solve a problem with hierarchy
         public async Task<IActionResult> Create([Bind("GroupOrArtistName,TicketsCount,EventDate,EventPlace,Price,Description,ImageURL,AgeLimit")] PartyConcert partyConcert)
         {
             if (!ModelState.IsValid)
