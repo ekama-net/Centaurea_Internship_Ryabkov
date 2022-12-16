@@ -69,4 +69,5 @@ C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\ConcertTickets.genruntimeconfig.cache
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Index.cshtml.g.cs
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Create.cshtml.g.cs
-C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Filter.cshtml.g.cs
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Details.cshtml.g.cs
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Delete.cshtml.g.cs

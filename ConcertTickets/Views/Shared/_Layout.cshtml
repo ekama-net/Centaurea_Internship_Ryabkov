@@ -20,23 +20,23 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Concert" asp-action="Index"><i class="bi bi-ticket-perforated"></i> Concerts</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Concert" asp-action="Index"><i class="bi bi-ticket-perforated"></i>All Concerts</a>
                         </li>
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bi bi-gear"></i> All Concerts
+                                <i class="bi bi-gear"></i> Sort By Type
                                 </a>
 
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">@*TODO: make filter by type*@
-                                        <a class="dropdown-item"><i class="bi bi-cup-straw"></i> Party</a>
-                                        <a class="dropdown-item"><i class="bi bi-speaker"></i> Open Air</a>
-                                        <a class="dropdown-item"><i class="bi bi-music-note-beamed"></i> Classic</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="PartyConcert"><i class="bi bi-cup-straw"></i> Party</a>
+                                        <a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="OpenAirConcert"><i class="bi bi-speaker"></i> Open Air</a>
+                                        <a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="ClassicalConcert"><i class="bi bi-music-note-beamed"></i> Classic</a>
                                     </div>
                                 </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Concert" asp-action="Filter" style="padding-right: 25px;">@*TODO: make filter*@
+                    <form class="form-inline my-2 my-lg-0" asp-controller="Concert" asp-action="FilterByName" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control" placeholder="Search for a concert...">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                     </form>

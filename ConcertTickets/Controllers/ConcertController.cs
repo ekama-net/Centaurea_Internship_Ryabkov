@@ -16,24 +16,40 @@ namespace ConcertTickets
         }
         public async Task<IActionResult> Index()
         {
-            var data = await _service.GetAll();
+            var data = await _service.GetAllAsync();
+            ViewBag.Title = "All Concerts";
             return View(data);
         }
 
-        public async Task<IActionResult> Filter(string searchString)
+        public async Task<IActionResult> FilterByType(ConcertType type)
         {
-            var data = await _service.GetAll();
-            var concerts = from m in data
-                         select m;
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                concerts = concerts.Where(s => s.GroupOrArtistName!.ToUpper().Contains(searchString.ToUpper()));
-            }
-
-            return View(concerts);
+            var data = await _service.GetAllAsync(type);
+            var title = type.ToString();
+            ViewBag.Title = title.Remove(title.Length-7);
+            return View("Index",data);
         }
 
+        public async Task<IActionResult> FilterByName(string searchString)
+        {
+            var data = await _service.GetAllAsync(searchString);
+
+            ViewBag.Title = $"Filter: {searchString}";
+            return View("Index", data);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var contertDetail = await _service.GetByIdAsync(id);
+            ViewBag.Title = $"{contertDetail.GroupOrArtistName}";
+            return View(contertDetail);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var contertDetail = await _service.GetByIdAsync(id);
+            ViewBag.Title = $"Delete {contertDetail.GroupOrArtistName}";
+            return View(contertDetail);
+        }
 
 
         [HttpPost] //TODO: contunue after solve a problem with hierarchy

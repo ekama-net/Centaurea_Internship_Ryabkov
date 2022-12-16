@@ -5,10 +5,15 @@ namespace ConcertTickets
 {
     public interface IConcertService
     {
-        Task<IEnumerable<Concert>> GetAll();
-        Concert GetById(int id);
-        void Add(Concert concert);
+        Task<IEnumerable<Concert>> GetAllAsync();
+        Task<IEnumerable<Concert>> GetAllAsync(ConcertType type);
+        Task<IEnumerable<Concert>> GetAllAsync(string searchString);
+        Task<Concert> GetByIdAsync(int id);
+        Task DeleteAsync(int id);
+        //Task<IEnumerable<PartyConcert>> GetAll();
+        //Task<IEnumerable<ClassicalConcert>> GetAll();
+        //Task<IEnumerable<OpenAirConcert>> GetAll();
+        void Add(Concert concert); 
         Concert Update(int id, Concert newConcert);
-        void Delete(int id);
     }
 }

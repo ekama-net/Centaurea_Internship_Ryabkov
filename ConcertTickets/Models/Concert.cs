@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ConcertTickets
 {
-    public class Concert //return abstract
+    public abstract class Concert
     {
         [Key]
         public int ConcertId { get; set; }
 
         [Required(ErrorMessage = "Group Or Artist Name is required")]
-        [StringLength(30, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 30")]
+        [StringLength(30, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 30 symbols")]
         public string GroupOrArtistName { get; set; }
 
         [Required(ErrorMessage = "Tickets Count is required")]
@@ -31,5 +31,6 @@ namespace ConcertTickets
 
         [Required(ErrorMessage = "ImageURL is required")]
         public string ImageURL { get; set; }
+        public string Discriminator { get; set; }
     }
 }
