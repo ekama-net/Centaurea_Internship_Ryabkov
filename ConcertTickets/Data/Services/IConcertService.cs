@@ -13,7 +13,9 @@ namespace ConcertTickets
         //Task<IEnumerable<PartyConcert>> GetAll();
         //Task<IEnumerable<ClassicalConcert>> GetAll();
         //Task<IEnumerable<OpenAirConcert>> GetAll();
-        void Add(Concert concert); 
         Concert Update(int id, Concert newConcert);
+        void AddParty(PartyConcert partyConcert);
+        void AddClassical(ClassicalConcert classicalConcert);
+        void AddOpenAir(OpenAirConcert openAirConcert);
     }
 }

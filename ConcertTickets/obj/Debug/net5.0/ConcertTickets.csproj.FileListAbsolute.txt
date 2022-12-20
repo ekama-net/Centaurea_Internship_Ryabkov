@@ -71,3 +71,6 @@ C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Create.cshtml.g.cs
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Details.cshtml.g.cs
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\Delete.cshtml.g.cs
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\CreateClassical.cshtml.g.cs
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\CreateOpenAir.cshtml.g.cs
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\CreateParty.cshtml.g.cs

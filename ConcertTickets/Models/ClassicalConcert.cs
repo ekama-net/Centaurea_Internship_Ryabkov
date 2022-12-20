@@ -2,7 +2,7 @@
 
 namespace ConcertTickets
 {
-    public class ClassicalConcert : Concert
+    public class ClassicalConcert :  Concert
     {
         [Required(ErrorMessage = "Voice Type is required")]
         public VoiceType VoiceType { get; set; }

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ConcertTickets
 {
-        //[Authorize(Roles = UserRoles.Admin)]
-        //[AllowAnonymous] TODO: Create Authorisation 
+    //[Authorize(Roles = UserRoles.Admin)]
+    //[AllowAnonymous] TODO: Create Authorisation 
     public class ConcertController : Controller
     {
         private readonly IConcertService _service;
@@ -25,8 +24,8 @@ namespace ConcertTickets
         {
             var data = await _service.GetAllAsync(type);
             var title = type.ToString();
-            ViewBag.Title = title.Remove(title.Length-7);
-            return View("Index",data);
+            ViewBag.Title = title.Remove(title.Length - 7);
+            return View("Index", data);
         }
 
         public async Task<IActionResult> FilterByName(string searchString)
@@ -47,19 +46,68 @@ namespace ConcertTickets
         public async Task<IActionResult> Delete(int id)
         {
             var contertDetail = await _service.GetByIdAsync(id);
+            if (contertDetail == null) return View("NotFound");
             ViewBag.Title = $"Delete {contertDetail.GroupOrArtistName}";
             return View(contertDetail);
         }
 
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var contertDetail = await _service.GetByIdAsync(id);
+            if (contertDetail == null) return View("NotFound");
 
-        [HttpPost] //TODO: contunue after solve a problem with hierarchy
-        public async Task<IActionResult> Create([Bind("GroupOrArtistName,TicketsCount,EventDate,EventPlace,Price,Description,ImageURL,AgeLimit")] PartyConcert partyConcert)
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        public IActionResult CreateParty()
+        {
+            return View();
+        }
+        public IActionResult CreateClassical()
+        {
+            return View();
+        }
+        public IActionResult CreateOpenAir()
+        {
+            return View();
+        }
+
+        [HttpPost] //TODO: how to make it better
+        public IActionResult CreateParty([Bind("ImageURL,Description,Price,EventPlace,EventDate,TicketsCount,GroupOrArtistName,AgeLimit")] PartyConcert concert)
         {
             if (!ModelState.IsValid)
             {
-                return View(partyConcert);
+                return View(concert);
             }
-            _service.Add(partyConcert);
+            _service.AddParty(concert);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult CreateClassical([Bind("ImageURL,Description,Price,EventPlace,EventDate,TicketsCount,GroupOrArtistName,СomposerName,ConcertName,VoiceType")] ClassicalConcert concert)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(concert);
+            }
+            _service.AddClassical(concert);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult CreateOpenAir([Bind("ImageURL,Description,Price,EventPlace,EventDate,TicketsCount,GroupOrArtistName,HowToGetTo,HeadLiner")] OpenAirConcert concert)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(concert);
+            }
+            _service.AddOpenAir(concert);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -14,9 +14,19 @@ namespace ConcertTickets
             _context = context;
         }
 
-        public void Add(Concert concert)
+        public void AddParty(PartyConcert partyConcert)
         {
-            _context.Concerts.Add(concert);
+            _context.PartyConcerts.Add(partyConcert);
+            _context.SaveChanges();
+        }
+        public void AddClassical(ClassicalConcert classicalConcert)
+        {
+            _context.ClassicalConcerts.Add(classicalConcert);
+            _context.SaveChanges();
+        }
+        public void AddOpenAir(OpenAirConcert openAirConcert)
+        {
+            _context.OpenAirConcerts.Add(openAirConcert);
             _context.SaveChanges();
         }
 
@@ -51,17 +61,6 @@ namespace ConcertTickets
             return result;
         }
 
-        public async Task<Concert> GetByIdAsync(int id)
-        {
-            var concertDetails = await _context.Concerts
-                .FirstOrDefaultAsync(n => n.ConcertId == id);
-            return concertDetails;
-        }
-        public Concert Update(int id, Concert newConcert)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task DeleteAsync(int id)
         {
             var concert = await _context.Concerts
@@ -69,5 +68,18 @@ namespace ConcertTickets
             _context.Concerts.Remove(concert);
             _context.SaveChanges();
         }
+
+        public async Task<Concert> GetByIdAsync(int id)
+        {
+            var concertDetails = await _context.Concerts
+                .FirstOrDefaultAsync(n => n.ConcertId == id);
+            return concertDetails;
+        }
+
+        public Concert Update(int id, Concert newConcert)
+        {
+            throw new System.NotImplementedException();
+        }
+
     }
 }
