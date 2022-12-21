@@ -61,18 +61,16 @@ namespace ConcertTickets
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
         public IActionResult CreateParty()
         {
             return View();
         }
+
         public IActionResult CreateClassical()
         {
             return View();
         }
+
         public IActionResult CreateOpenAir()
         {
             return View();
@@ -85,7 +83,7 @@ namespace ConcertTickets
             {
                 return View(concert);
             }
-            _service.AddParty(concert);
+            _service.AddConcert(concert);
             return RedirectToAction(nameof(Index));
         }
 
@@ -96,7 +94,7 @@ namespace ConcertTickets
             {
                 return View(concert);
             }
-            _service.AddClassical(concert);
+            _service.AddConcert(concert);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,8 +105,47 @@ namespace ConcertTickets
             {
                 return View(concert);
             }
-            _service.AddOpenAir(concert);
+            _service.AddConcert(concert);
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var contertDetail = await _service.GetByIdAsync(id);
+            if (contertDetail == null) return View("NotFound");
+            ViewBag.Title = $"Edit {contertDetail.GroupOrArtistName}";
+            return View(contertDetail);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditParty(PartyConcert concert)
+        {            
+            if (!ModelState.IsValid)
+            {
+                return View("Edit",concert);
+            }
+            _service.Update(concert.ConcertId, concert);
+            return RedirectToAction(nameof(Index));
+        }
+       /* [HttpPost, ActionName("Edit")]
+        public IActionResult EditClassical(ClassicalConcert concert)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", concert);
+            }
+            _service.Update(concert.ConcertId, concert);
+            return RedirectToAction(nameof(Index));
+        }
+        [HttpPost, ActionName("Edit")]
+        public IActionResult EditOpenAir(OpenAirConcert concert)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", concert);
+            }
+            _service.Update(concert.ConcertId, concert);
+            return RedirectToAction(nameof(Index));
+        }*/
     }
 }

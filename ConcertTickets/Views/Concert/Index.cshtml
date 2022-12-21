@@ -67,5 +67,16 @@
     @*TODO: admin panel and put here ADD NEW*@
 }
 <div style="position: fixed; right: 25px; bottom: 75px;" class="text-white">
-    <a asp-controller="Concert" asp-action="Create" class="btn btn-success"><i class="badge-info bi-plus-circle"></i> Add New</a>
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="bi bi-plus-circle"></i>
+            Add New
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-controller="Concert" asp-action="CreateParty">Party Concert</a> </li>
+            <li class="divider"></li>
+            <li><a class="dropdown-item" asp-controller="Concert" asp-action="CreateClassical">Classical Concert</a> </li>
+            <li class="divider"></li>
+            <li><a class="dropdown-item" asp-controller="Concert" asp-action="CreateOpenAir">Open Air Concert</a> </li>
+        </ul>
+    </div>
 </div>

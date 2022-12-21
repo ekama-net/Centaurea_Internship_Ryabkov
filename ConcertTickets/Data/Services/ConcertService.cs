@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,19 +15,20 @@ namespace ConcertTickets
             _context = context;
         }
 
-        public void AddParty(PartyConcert partyConcert)
+        public void AddConcert<T>(T concert) where T : class
         {
-            _context.PartyConcerts.Add(partyConcert);
-            _context.SaveChanges();
-        }
-        public void AddClassical(ClassicalConcert classicalConcert)
-        {
-            _context.ClassicalConcerts.Add(classicalConcert);
-            _context.SaveChanges();
-        }
-        public void AddOpenAir(OpenAirConcert openAirConcert)
-        {
-            _context.OpenAirConcerts.Add(openAirConcert);
+            if (concert is PartyConcert partyConcert)
+            {
+                _context.PartyConcerts.Add(partyConcert);
+            }
+            if (concert is ClassicalConcert classicalConcert)
+            {
+                _context.ClassicalConcerts.Add(classicalConcert);
+            }
+            if (concert is OpenAirConcert openAirConcert)
+            {
+                _context.OpenAirConcerts.Add(openAirConcert);
+            }
             _context.SaveChanges();
         }
 
@@ -76,9 +78,13 @@ namespace ConcertTickets
             return concertDetails;
         }
 
-        public Concert Update(int id, Concert newConcert)
+        public void Update<T>(int id, T concert) where T : class
         {
-            throw new System.NotImplementedException();
+           // EntityEntry entityEntry = ;
+           //var concert = _context.Concerts.Where(i => i.ConcertId == id).FirstOrDefault();
+
+            //_context.Entry<T>(concert).State = EntityState.Modified;
+            //_context.SaveChanges();
         }
 
     }

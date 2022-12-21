@@ -10,12 +10,7 @@ namespace ConcertTickets
         Task<IEnumerable<Concert>> GetAllAsync(string searchString);
         Task<Concert> GetByIdAsync(int id);
         Task DeleteAsync(int id);
-        //Task<IEnumerable<PartyConcert>> GetAll();
-        //Task<IEnumerable<ClassicalConcert>> GetAll();
-        //Task<IEnumerable<OpenAirConcert>> GetAll();
-        Concert Update(int id, Concert newConcert);
-        void AddParty(PartyConcert partyConcert);
-        void AddClassical(ClassicalConcert classicalConcert);
-        void AddOpenAir(OpenAirConcert openAirConcert);
+        void AddConcert<T>(T concert) where T : class;
+        void Update<T>(int id, T concert) where T : class;
     }
 }
