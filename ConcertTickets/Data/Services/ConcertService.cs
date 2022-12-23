@@ -78,14 +78,27 @@ namespace ConcertTickets
             return concertDetails;
         }
 
-        public void Update<T>(int id, T concert) where T : class
+        public void Update<T>(int id,T concert) where T : class
         {
-           // EntityEntry entityEntry = ;
-           //var concert = _context.Concerts.Where(i => i.ConcertId == id).FirstOrDefault();
-
-            //_context.Entry<T>(concert).State = EntityState.Modified;
-            //_context.SaveChanges();
+            if (concert is PartyConcert partyConcert)
+            {
+                PartyConcert dbconcert = _context.PartyConcerts.Where(p => p.ConcertId == id).FirstOrDefault();
+                var UpdatedObj = (PartyConcert)Extensions.CheckUpdateObject(dbconcert, partyConcert);
+                _context.Entry(dbconcert).CurrentValues.SetValues(partyConcert);
+            }
+            if (concert is ClassicalConcert classicalConcert)
+            {
+                ClassicalConcert dbconcert = _context.ClassicalConcerts.Where(p => p.ConcertId == id).FirstOrDefault();
+                var UpdatedObj = (ClassicalConcert)Extensions.CheckUpdateObject(dbconcert, classicalConcert);
+                _context.Entry(dbconcert).CurrentValues.SetValues(classicalConcert);
+            }
+            if (concert is OpenAirConcert openAirConcert)
+            {
+                OpenAirConcert dbconcert = _context.OpenAirConcerts.Where(p => p.ConcertId == id).FirstOrDefault();
+                var UpdatedObj = (OpenAirConcert)Extensions.CheckUpdateObject(dbconcert, openAirConcert);
+                _context.Entry(dbconcert).CurrentValues.SetValues(openAirConcert);
+            }
+            _context.SaveChanges();
         }
-
     }
 }

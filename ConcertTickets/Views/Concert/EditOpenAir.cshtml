@@ -1,4 +1,4 @@
-﻿@model PartyConcert
+﻿@model OpenAirConcert
 
 <div class="row text">
     <div class="col-md-8 offset-2">
@@ -6,8 +6,8 @@
             <h1 class="text-center">Update data for @Model.GroupOrArtistName</h1>
         </p>
         <div class="row">
-            <div class="col-md-8 offset-2">
-                <form action="EditParty" enctype="multipart/form-data" id="actn" method="post">
+            <div class="col-md-8 offset-2"> 
+                <form asp-action="EditOpenAir" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group text-center">
                     <img src="@Model.ImageURL"  width="30%" id="ImageURLprev"/>
@@ -47,48 +47,18 @@
                         <input asp-for="Price" class="form-control"/>
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
-                    @*if(Model is ClassicalConcert classical)
-                    {
                         <div class="form-group">
-                            <label asp-for="@classical.VoiceType" class="control-label"></label>
-                            <select asp-for="@classical.VoiceType"  class="form-control" option asp-items="@new SelectList(Enum.GetNames(typeof(VoiceType)))"></select>
-                            <span asp-validation-for="@classical.VoiceType" class="text-danger"></span>
+                            <label asp-for="HowToGetTo" class="control-label"></label>
+                            <input asp-for="HowToGetTo" class="form-control"/>
+                            <span asp-validation-for="HowToGetTo" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="@classical.ConcertName" class="control-label"></label>
-                            <input asp-for="@classical.ConcertName" class="form-control"/>
-                            <span asp-validation-for="@classical.ConcertName" class="text-danger"></span>
+                            <label asp-for="HeadLiner" class="control-label"></label>
+                            <input asp-for="HeadLiner" class="form-control"/>
+                            <span asp-validation-for="HeadLiner" class="text-danger"></span>
                         </div>
-                        <div class="form-group">
-                            <label asp-for="@classical.СomposerName" class="control-label"></label>
-                            <input asp-for="@classical.СomposerName" class="form-control"/>
-                            <span asp-validation-for="@classical.СomposerName" class="text-danger"></span>
-                        </div>   
-                    }*@
-                    @if(Model is PartyConcert party)
-                    {
-
-                        <div class="form-group">
-                            <label asp-for="@party.AgeLimit" class="control-label"></label>
-                            <input asp-for="@party.AgeLimit" class="form-control"/>
-                            <span asp-validation-for="@party.AgeLimit" class="text-danger"></span>
-                        </div>   
-                    }
-                  @*  @if(Model is OpenAirConcert openAir)
-                    {
-                        <div class="form-group">
-                            <label asp-for="@openAir.HowToGetTo" class="control-label"></label>
-                            <input asp-for="@openAir.HowToGetTo" class="form-control"/>
-                            <span asp-validation-for="@openAir.HowToGetTo" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="@openAir.HeadLiner" class="control-label"></label>
-                            <input asp-for="@openAir.HeadLiner" class="form-control"/>
-                            <span asp-validation-for="@openAir.HeadLiner" class="text-danger"></span>
-                        </div>   
-                    }*@
                     <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-outline-success float-right" />
+                        <input type="submit" asp-route-id="@Model.ConcertId" value="Save" class="btn btn-outline-success float-right" />
                         <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
                     </div>
                </form>
@@ -105,7 +75,5 @@
             var output = document.getElementById('ImageURLprev');
             output.src = $(this).val();
         })
-    </script>
-    <script>
     </script>
 }

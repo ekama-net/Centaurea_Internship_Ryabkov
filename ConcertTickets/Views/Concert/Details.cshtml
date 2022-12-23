@@ -60,9 +60,18 @@
                             <a class="btn btn-outline-primary" asp-action="Index">
                                 Back to List
                             </a> | 
-                            <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.ConcertId">
-                                Edit
-                            </a> | 
+                            @if(@Model.GetType() == typeof(PartyConcert))
+                            {
+                                <a class="btn btn-outline-primary" asp-action="EditParty" asp-route-id="@Model.ConcertId"> Edit </a>
+                            }
+                            @if(@Model.GetType() == typeof(ClassicalConcert))
+                            {
+                                <a class="btn btn-outline-primary" asp-action="EditClassical" asp-route-id="@Model.ConcertId"> Edit </a>
+                            }
+                            @if(@Model.GetType() == typeof(OpenAirConcert))
+                            {
+                                <a class="btn btn-outline-primary" asp-action="EditOpenAir" asp-route-id="@Model.ConcertId"> Edit </a>
+                            } | 
                             <a class="btn btn-outline-primary" asp-action="Delete" asp-route-id="@Model.ConcertId">
                                 Delete
                             </a> 
