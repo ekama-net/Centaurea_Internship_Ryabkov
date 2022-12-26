@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ConcertTickets</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Concert" asp-action="Index">ConcertTickets</a>
+                <a class="navbar-brand">ConcertTickets</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,14 +28,14 @@
                                 <i class="bi bi-gear"></i> Sort By Type
                                 </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="PartyConcert"><i class="bi bi-cup-straw"></i> Party</a> </li>
-                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="OpenAirConcert"><i class="bi bi-speaker"></i> Open Air</a> </li>
-                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="ClassicalConcert"><i class="bi bi-music-note-beamed"></i> Classic</a> </li>
+                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="PartyConcert" asp-route-page="1"><i class="bi bi-cup-straw"></i> Party</a> </li>
+                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="OpenAirConcert" asp-route-page="1"><i class="bi bi-speaker"></i> Open Air</a> </li>
+                                      <li><a class="dropdown-item" asp-controller="Concert" asp-action="FilterByType" asp-route-type="ClassicalConcert" asp-route-page="1"><i class="bi bi-music-note-beamed"></i> Classic</a> </li>
                                     </ul>
                                 </li>
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Concert" asp-action="FilterByName" style="padding-right: 25px;">
+                    <form class="form-inline my-2 my-lg-0" asp-controller="Concert" asp-action="FilterByName" asp-route-page="1" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control" placeholder="Search for a concert...">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                     </form>

@@ -1,7 +1,28 @@
-﻿@model IEnumerable<Concert>
+﻿@model IndexViewModel
 
+
+
+<div class="badge badge-light rounded text-info" style="margin-top: 70px;margin-bottom: 10px; display:block;">
+    <p>
+        @{
+            if(Model.SearchString!=null && Model.Concerts.All(s => s.GroupOrArtistName.ToUpper().Contains(Model.SearchString.ToUpper())))
+            {
+                <h3> Find: @Model.SearchString</h3>
+            }
+            else if(Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
+                Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString()))
+            {
+                <h3> @Model.Concerts.FirstOrDefault().Discriminator.Replace("Concert","")</h3>
+            }
+            else
+            {
+                <h3> All Concerts</h3>
+            }
+        }
+    </p>
+</div>
 <div class="row">
-    @foreach(var item in Model)
+    @foreach(var item in Model.Concerts)
     {
         <div class="col-md-4 col-xs-6 border-primary mb-3">
             <div class="card mb-3" style="max-width: 540px;">
@@ -72,6 +93,49 @@
         </div>
     }
 </div>
+    
+@{
+    if (Model.PageViewModel.HasPreviousPage && (Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
+    Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString())))
+    {
+        <a asp-action="FilterByType"
+        asp-route-type=@Model.Concerts.FirstOrDefault().Discriminator
+        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+        class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+        </a>
+    }
+    else if (Model.PageViewModel.HasPreviousPage )
+    {
+        <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+        class="btn btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+        </a>
+    }
+    if (Model.PageViewModel.HasNextPage && (Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
+    Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString())))
+    {
+        <a asp-action="FilterByType"
+        asp-route-type=@Model.Concerts.FirstOrDefault().Discriminator
+        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+        class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+    else if(Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+        class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+}
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
     @*TODO: admin panel and put here ADD NEW*@

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,35 +31,59 @@ namespace ConcertTickets
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Concert>> GetAllAsync()
+        public async Task<IndexViewModel> GetAllAsync(int page)
         {
-            var result = await _context.Concerts.ToListAsync();
-            return result;
+            IQueryable<Concert> source = _context.Concerts;
+
+            int pageSize = 6;
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Concerts = items
+            };
+
+            return viewModel;
+        } 
+
+        public async Task<IndexViewModel> GetAllAsync(ConcertType type, int page)
+        {
+            IQueryable<Concert> source = _context.Concerts.Where(i=>i.Discriminator == type.ToString());
+            
+            int pageSize = 6;
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
+            {
+                PageViewModel = pageViewModel,
+                Concerts = items
+            };
+
+            return viewModel;
         }
 
-        public async Task<IEnumerable<Concert>> GetAllAsync(ConcertType type)
+        public async Task<IndexViewModel> GetAllAsync(string searchString, int page)
         {
-            var allList = await _context.Concerts.ToListAsync();
-            var result = new List<Concert>();
-            foreach (var item in allList)
-            {
-                if (item.Discriminator == type.ToString())
-                    result.Add(item);
-            }
-            return result;
-        }
+            IQueryable<Concert> source = _context.Concerts.Where(s => s.GroupOrArtistName.ToUpper().Contains(searchString.ToUpper()));
+            
+            int pageSize = 6;
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
 
-        public async Task<IEnumerable<Concert>> GetAllAsync(string searchString)
-        {
-            var data = await _context.Concerts.ToListAsync();
-            var result = from m in data
-                         select m;
-
-            if (!string.IsNullOrEmpty(searchString))
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            IndexViewModel viewModel = new IndexViewModel
             {
-                result = result.Where(s => s.GroupOrArtistName!.ToUpper().Contains(searchString.ToUpper()));
-            }
-            return result;
+                PageViewModel = pageViewModel,
+                Concerts = items,
+                SearchString = searchString               
+            };
+
+            return viewModel;
         }
 
         public async Task DeleteAsync(int id)
