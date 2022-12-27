@@ -5,17 +5,19 @@
 <div class="badge badge-light rounded text-info" style="margin-top: 70px;margin-bottom: 10px; display:block;">
     <p>
         @{
-            if(Model.SearchString!=null && Model.Concerts.All(s => s.GroupOrArtistName.ToUpper().Contains(Model.SearchString.ToUpper())))
+            if(Model.SearchString!=null)
             {
+                ViewData["Title"] = @Model.SearchString;
                 <h3> Find: @Model.SearchString</h3>
             }
-            else if(Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
-                Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString()))
+            else if(Model.Type!=null)
             {
+                ViewData["Title"] = @Model.Concerts.FirstOrDefault().Discriminator.Replace("Concert","");        
                 <h3> @Model.Concerts.FirstOrDefault().Discriminator.Replace("Concert","")</h3>
             }
             else
             {
+                ViewData["Title"] = "All Concerts";   
                 <h3> All Concerts</h3>
             }
         }
@@ -95,46 +97,46 @@
 </div>
     
 @{
-    if (Model.PageViewModel.HasPreviousPage && (Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
-    Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString())))
-    {
-        <a asp-action="FilterByType"
-        asp-route-type=@Model.Concerts.FirstOrDefault().Discriminator
-        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
-        class="btn btn-outline-dark">
-        <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
-        </a>
-    }
-    else if (Model.PageViewModel.HasPreviousPage )
+    if (Model.PageViewModel.HasPreviousPage )
     {
         <a asp-action="Index"
-        asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+        asp-route-page=@(Model.PageViewModel.PageNumber - 1)
+        asp-route-type=@(Model.Type)
+        asp-route-searchString=@(Model.SearchString)
         class="btn btn-outline-dark">
         <i class="glyphicon glyphicon-chevron-left"></i>
-        Назад
+        Previous
         </a>
     }
-    if (Model.PageViewModel.HasNextPage && (Model.Concerts.All(i=>i.Discriminator == typeof(ClassicalConcert).Name.ToString()) ||
-    Model.Concerts.All(i=>i.Discriminator == typeof(PartyConcert).Name.ToString()) || Model.Concerts.All(i=>i.Discriminator == typeof(OpenAirConcert).Name.ToString())))
-    {
-        <a asp-action="FilterByType"
-        asp-route-type=@Model.Concerts.FirstOrDefault().Discriminator
-        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+    else {  <a class="btn btn-outline-light" tabindex="-1">  <i class="glyphicon glyphicon-chevron-left"></i>  Previous   </a>
+    }
+    for (int num = 1;num <= Model.PageViewModel.TotalPages; num++ )
+    {        
+        if(Model.PageViewModel.PageNumber == num)
+        {
+            <a class="btn btn-dark" tabindex="-1"> @num </a> 
+            continue;
+        }
+        <a asp-action="Index"
+        asp-route-page=@(num)
+        asp-route-type=@(Model.Type)
+        asp-route-searchString=@(Model.SearchString)
         class="btn btn-outline-dark">
-        Вперед
+        @num
+        </a>             
+    } 
+    if(Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index"
+        asp-route-page=@(Model.PageViewModel.PageNumber + 1)
+        asp-route-type=@(Model.Type)
+        asp-route-searchString=@(Model.SearchString)
+        class="btn btn-outline-dark">
+        Next
         <i class="glyphicon glyphicon-chevron-right"></i>
         </a>
     }
-    else if(Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="Index"
-        asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
-        class="btn btn-outline-dark">
-        Вперед
-        <i class="glyphicon glyphicon-chevron-right"></i>
-        </a>
-    }
+    else  { <a class="btn btn-outline-light" tabindex="-1">  Next  <i class="glyphicon glyphicon-chevron-right"></i></a>}
 }
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {

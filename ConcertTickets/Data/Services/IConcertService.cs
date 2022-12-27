@@ -10,8 +10,6 @@ namespace ConcertTickets
         Task DeleteAsync(int id);
         void AddConcert<T>(T concert) where T : class;
         void Update<T>(int id, T concert) where T : class;
-        Task<IndexViewModel> GetAllAsync(int page);
-        Task<IndexViewModel> GetAllAsync(ConcertType type, int page);
-        Task<IndexViewModel> GetAllAsync(string searchString, int page);
+        Task<IndexViewModel> GetAllAsync(string type, string searchString, int page);
     }
 }

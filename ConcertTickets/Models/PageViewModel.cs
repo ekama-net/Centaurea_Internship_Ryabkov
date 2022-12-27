@@ -4,13 +4,12 @@ namespace ConcertTickets
 {
     public class PageViewModel
     {
-        public int PageNumber { get; private set; }
-        public int TotalPages { get; private set; }
-
-        public PageViewModel(int count, int pageNumber, int pageSize)
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; set; }
+        public int TotalPages
         {
-            PageNumber = pageNumber;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            get { return (int)Math.Ceiling((decimal)TotalItems / PageSize); }
         }
 
         public bool HasPreviousPage

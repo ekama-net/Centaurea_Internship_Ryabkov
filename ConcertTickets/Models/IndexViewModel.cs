@@ -6,6 +6,7 @@ namespace ConcertTickets
     {
         public IEnumerable<Concert> Concerts { get; set; }
         public PageViewModel PageViewModel { get; set; }
-        public string SearchString { get; set; }    
+        public string SearchString { get; set; }
+        public string Type { get; set; }
     }
 }
