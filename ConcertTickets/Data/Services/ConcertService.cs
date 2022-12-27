@@ -31,57 +31,19 @@ namespace ConcertTickets
             _context.SaveChanges();
         }
 
-        public async Task<IndexViewModel> GetAllAsync(int page)
+        public async Task<IndexViewModel> GetAllAsync(string type, string searchString, int page)
         {
-            IQueryable<Concert> source = _context.Concerts;
+            var source = await _context.Concerts.ToListAsync();
 
-            int pageSize = 6;
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            if (!string.IsNullOrEmpty(searchString))
+                source = await _context.Concerts.Where(s => s.GroupOrArtistName.ToUpper().Contains(searchString.ToUpper())).ToListAsync();
+            else if (!string.IsNullOrEmpty(type))
+                source = await _context.Concerts.Where(i => i.Discriminator == type.ToString()).ToListAsync();
 
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
-            {
-                PageViewModel = pageViewModel,
-                Concerts = items
-            };
-
-            return viewModel;
-        } 
-
-        public async Task<IndexViewModel> GetAllAsync(ConcertType type, int page)
-        {
-            IQueryable<Concert> source = _context.Concerts.Where(i=>i.Discriminator == type.ToString());
-            
-            int pageSize = 6;
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
-            {
-                PageViewModel = pageViewModel,
-                Concerts = items
-            };
-
-            return viewModel;
-        }
-
-        public async Task<IndexViewModel> GetAllAsync(string searchString, int page)
-        {
-            IQueryable<Concert> source = _context.Concerts.Where(s => s.GroupOrArtistName.ToUpper().Contains(searchString.ToUpper()));
-            
-            int pageSize = 6;
-            var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
-
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            IndexViewModel viewModel = new IndexViewModel
-            {
-                PageViewModel = pageViewModel,
-                Concerts = items,
-                SearchString = searchString               
-            };
+            int pageSize = 6; //TODO сделать больше, когда будет больше концертов
+            IEnumerable<Concert> items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            PageViewModel pageInfo = new PageViewModel { PageNumber = page, PageSize = pageSize, TotalItems = source.Count };
+            IndexViewModel viewModel = new IndexViewModel { PageViewModel = pageInfo, Concerts = items, SearchString = searchString, Type = type };
 
             return viewModel;
         }
@@ -101,7 +63,7 @@ namespace ConcertTickets
             return concertDetails;
         }
 
-        public void Update<T>(int id,T concert) where T : class
+        public void Update<T>(int id, T concert) where T : class
         {
             if (concert is PartyConcert partyConcert)
             {

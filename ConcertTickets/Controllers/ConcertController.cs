@@ -16,29 +16,11 @@ namespace ConcertTickets
             _service = service;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1, string type = null, string searchString = null)
         {
-            var data = await _service.GetAllAsync(page);
+            var data = await _service.GetAllAsync(type, searchString, page);
             ViewBag.Title = "All Concerts";
             return View(data);
-        }
-
-        public async Task<IActionResult> FilterByType(ConcertType type, int page)
-        {
-            var data = await _service.GetAllAsync(type,page);
-            ViewBag.Title = type.ToString();
-            return View("Index", data);
-        }
-
-        public async Task<IActionResult> FilterByName(string searchString, int page)
-        {
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                var data = await _service.GetAllAsync(searchString, page);
-                ViewBag.Title = $"Filter: {searchString}";
-                return View("Index", data);
-            }
-            return View("Index", await _service.GetAllAsync(page));
         }
 
         public async Task<IActionResult> Details(int id)
