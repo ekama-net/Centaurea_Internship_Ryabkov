@@ -10,6 +10,7 @@ a.navbar-brand {
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
+
 }
 
 .btn-primary {
@@ -69,3 +70,43 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/*Anchor*/
+.scroll {
+    color: #fff;
+    margin-top: 100px;
+}
+
+#toTopBtn {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 65px;
+    right: 20px;
+    z-index: 98;
+    padding: 21px;
+    background-color: #17a2b88c;
+}
+
+.js .cd-top--fade-out {
+    opacity: .5;
+}
+
+.js .cd-top--is-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.js .cd-top {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s,visibility .3s,background-color .3s;
+}
+
+.cd-top {    
+    display: none;
+    height: 80px;
+    width: 80px;
+    box-shadow: 0 0 10px rgba(0,0,0,.05) !important;
+    background: url(https://res.cloudinary.com/dxfq3iotg/image/upload/v1571057658/cd-top-arrow.svg) no-repeat center 50%;
+}
+

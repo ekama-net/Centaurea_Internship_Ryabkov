@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//Anchor function
+$(document).ready(function () {
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 50) {
+            $('#toTopBtn').fadeIn();
+        } else {
+            $('#toTopBtn').fadeOut();
+        }
+    });
 
-// Write your JavaScript code.
+    $('#toTopBtn').click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 1000);
+        return false;
+    });
+});
