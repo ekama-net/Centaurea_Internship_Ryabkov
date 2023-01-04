@@ -5,6 +5,8 @@ namespace ConcertTickets
 {
     public abstract class Concert
     {
+        private string imageURL;
+
         [Key]
         public int ConcertId { get; set; }
 
@@ -28,9 +30,16 @@ namespace ConcertTickets
 
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; }
+        public string ImageURL
+        {
+            get 
+            {
+                if (imageURL != null) return imageURL;
+                else return "https://banffventureforum.com/wp-content/uploads/2019/08/No-Image.png";
+            }
+            set {imageURL = value;}
+        }
 
-        [Required(ErrorMessage = "ImageURL is required")]
-        public string ImageURL { get; set; }
         public string Discriminator { get; set; }
     }
 }
