@@ -119,7 +119,7 @@ namespace ConcertTickets
         }
 
         [HttpPost]
-        public IActionResult EditParty(int id,[Bind("ImageURL,Description,Price,EventPlace,EventDate,TicketsCount,GroupOrArtistName,AgeLimit")] PartyConcert concert)
+        public IActionResult EditParty(int id, [Bind("ImageURL,Description,Price,EventPlace,EventDate,TicketsCount,GroupOrArtistName,AgeLimit")] PartyConcert concert)
         {
             if (!ModelState.IsValid)
             {

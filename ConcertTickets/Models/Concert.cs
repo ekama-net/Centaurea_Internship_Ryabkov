@@ -32,12 +32,15 @@ namespace ConcertTickets
         public string Description { get; set; }
         public string ImageURL
         {
-            get 
+            get
             {
                 if (imageURL != null) return imageURL;
                 else return "https://banffventureforum.com/wp-content/uploads/2019/08/No-Image.png";
             }
-            set {imageURL = value;}
+            set
+            {
+                imageURL = value;
+            }
         }
 
         public string Discriminator { get; set; }
