@@ -49,7 +49,7 @@ namespace ConcertTickets
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Concert}/{action=Index}/{id?}");
             });
 
             AppDbInitializer.Seed(app);
