@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace ConcertTickets
 {
@@ -22,7 +23,12 @@ namespace ConcertTickets
 
             services.AddScoped<IConcertService, ConcertService>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
             services.AddControllersWithViews();
+
+            services.AddSession();
         }
 
 
@@ -42,6 +48,7 @@ namespace ConcertTickets
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
