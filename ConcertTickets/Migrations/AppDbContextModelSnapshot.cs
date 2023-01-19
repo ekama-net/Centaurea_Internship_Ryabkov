@@ -27,6 +27,7 @@ namespace ConcertTickets.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discriminator")
@@ -37,10 +38,13 @@ namespace ConcertTickets.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EventPlace")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GroupOrArtistName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
@@ -58,18 +62,91 @@ namespace ConcertTickets.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Concert");
                 });
 
+            modelBuilder.Entity("ConcertTickets.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ConcertTickets.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ConcertId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConcertId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("ConcertTickets.ShoppingCartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ConcertId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShoppingCartId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConcertId");
+
+                    b.ToTable("ShoppingCartItems");
+                });
+
             modelBuilder.Entity("ConcertTickets.ClassicalConcert", b =>
                 {
                     b.HasBaseType("ConcertTickets.Concert");
 
                     b.Property<string>("ConcertName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("VoiceType")
                         .HasColumnType("int");
 
                     b.Property<string>("СomposerName")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasDiscriminator().HasValue("ClassicalConcert");
                 });
@@ -79,9 +156,12 @@ namespace ConcertTickets.Migrations
                     b.HasBaseType("ConcertTickets.Concert");
 
                     b.Property<string>("HeadLiner")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("HowToGetTo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("OpenAirConcert");
@@ -95,6 +175,39 @@ namespace ConcertTickets.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("PartyConcert");
+                });
+
+            modelBuilder.Entity("ConcertTickets.OrderItem", b =>
+                {
+                    b.HasOne("ConcertTickets.Concert", "Concert")
+                        .WithMany()
+                        .HasForeignKey("ConcertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConcertTickets.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Concert");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("ConcertTickets.ShoppingCartItem", b =>
+                {
+                    b.HasOne("ConcertTickets.Concert", "Concert")
+                        .WithMany()
+                        .HasForeignKey("ConcertId");
+
+                    b.Navigation("Concert");
+                });
+
+            modelBuilder.Entity("ConcertTickets.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }
