@@ -77,3 +77,4 @@ C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Concert\EditParty.cshtml.g.cs
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Shared\NotFound.cshtml.g.cs
 C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\ConcertTickets.csproj.AssemblyReference.cache
+C:\Users\maksim\Desktop\Centuarea\ConcertTickets\ConcertTickets\obj\Debug\net5.0\Razor\Views\Orders\ShoppingCart.cshtml.g.cs
