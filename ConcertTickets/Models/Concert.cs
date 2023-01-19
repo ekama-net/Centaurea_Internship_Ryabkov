@@ -35,7 +35,7 @@ namespace ConcertTickets
             get
             {
                 if (imageURL != null) return imageURL;
-                else return "https://banffventureforum.com/wp-content/uploads/2019/08/No-Image.png";
+                else return "https://www.kvitki.by/imageGenerator/eventDetails/b3b9c7b672c006d88ed815c3ba5771da";
             }
             set
             {

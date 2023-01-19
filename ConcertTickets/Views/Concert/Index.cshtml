@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <img src="@item.ImageURL" height="360px"  alt="@item.GroupOrArtistName">
+                        <img src="@item.ImageURL" width = "100%" alt="@item.GroupOrArtistName">
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
@@ -83,7 +83,6 @@
                                 <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.ConcertId">
                                     <i class="bi bi-eye-fill"></i> Show Details
                                 </a>
-                                @*TODO: make orders*@
                                <a class="btn btn-success text-white @((DateTime.Now > item.EventDate)||(item.TicketsCount<1) ? "disabled" : "")"  
                                    asp-controller="Orders" 
                                    asp-action="AddItemToShoppingCart" 

@@ -75,7 +75,6 @@
                             <a class="btn btn-outline-primary" asp-action="Delete" asp-route-id="@Model.ConcertId">
                                 Delete
                             </a> 
-                             @*TODO: make orders*@
                             <a class="btn btn-success text-white float-right @((DateTime.Now > Model.EventDate || Model.TicketsCount<1) ? "disabled" : "")" 
                                asp-controller="Orders" 
                                asp-action="AddItemToShoppingCart" 
