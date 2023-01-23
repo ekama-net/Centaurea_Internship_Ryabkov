@@ -28,6 +28,7 @@ namespace ConcertTickets
             return View(response);
         }
 
+         //TODO: Make it better with react
         public async Task<RedirectToActionResult> AddItemToShoppingCart(int id)
         {
             var item = await _concertService.GetByIdAsync(id);
