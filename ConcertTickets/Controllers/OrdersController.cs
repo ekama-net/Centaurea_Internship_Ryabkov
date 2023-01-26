@@ -51,5 +51,17 @@ namespace ConcertTickets
             }
             return RedirectToAction(nameof(ShoppingCart));
         }
+
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = _shoppingCart.GetShoppingCartItems();
+            string userId = "";
+            string userEmailAdress = "";
+
+            await _ordersService.StoreOrderAsync(items, userId, userEmailAdress);
+            await _shoppingCart.ClearShoppingCartAsync();
+
+            return View("OrderCompleted");
+        }
     }
 }
