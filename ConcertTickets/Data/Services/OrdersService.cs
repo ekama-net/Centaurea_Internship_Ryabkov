@@ -15,13 +15,13 @@ namespace ConcertTickets
 
         public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId, string userRole)
         {
-            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Concert)/*.Include(USER)*/.ToListAsync();
-
-            if (userRole != "Admin") //TODO: Added autorisation
-            {
-                orders = orders.Where(n => n.UserId == userId).ToList();
-            }
-
+            var orders = await _context.Orders.Include(n => n.OrderItems).ThenInclude(n => n.Concert).Where(n => n.UserId == userId).ToListAsync();
+            /*
+                        if (userRole != "Admin") //TODO: Added autorisation
+                        {
+                            orders = orders.Where(n => n.UserId == userId).ToList();
+                        }
+            */
             return orders;
         }
 
