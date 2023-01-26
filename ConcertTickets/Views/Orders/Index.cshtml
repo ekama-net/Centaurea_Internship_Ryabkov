@@ -1,0 +1,50 @@
+﻿@model List<Order>
+
+<div class="badge badge-light rounded text-info" style="margin-top: 70px;margin-bottom: 10px; display:block;">
+    <p>
+        @{
+            ViewData["Title"] = "All orders";
+            <h3> List of all yours orders</h3>
+        }
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                <tr>
+                    <td class="align-middle">@order.Id</td>
+                    <td class="align-middle">
+                        <ul style="list-style-type:none">
+                            @foreach (var item in order.OrderItems)
+                            {
+                                <li>
+                                    <div class="alert alert-info" role="alert">
+                                        <span class="badge bg-success">@item.Amount</span> [@item.Price.ToString("c")] - @item.Concert.GroupOrArtistName
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                    <td class="align-middle">
+                        @order.OrderItems.Select(m => m.Concert.Price * m.Amount).Sum().ToString("c")
+                    </td>
+                        <td class="align-middle"> TestUser </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
