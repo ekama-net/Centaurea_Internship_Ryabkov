@@ -22,10 +22,11 @@ namespace ConcertTickets
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IConcertService, ConcertService>();
+            services.AddScoped<IOrdersService, OrdersService>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
-
+            
             services.AddControllersWithViews();
 
             services.AddSession();

@@ -7,14 +7,15 @@ namespace ConcertTickets
     {
         private readonly IConcertService _concertService;
         private readonly ShoppingCart _shoppingCart;
-       // private readonly IOrdersService _ordersService;
+        private readonly IOrdersService _ordersService;
 
-        public OrdersController(IConcertService concertService, ShoppingCart shoppingCart/*, IOrdersService ordersService*/)
+        public OrdersController(IConcertService concertService, ShoppingCart shoppingCart, IOrdersService ordersService)
         {
             _concertService = concertService;
             _shoppingCart = shoppingCart;
-           // _ordersService = ordersService;
+            _ordersService = ordersService;
         }
+
         public IActionResult ShoppingCart()
         {
             var items = _shoppingCart.GetShoppingCartItems();
@@ -39,6 +40,7 @@ namespace ConcertTickets
             }
             return RedirectToAction(nameof(ShoppingCart));
         }
+
         public async Task<IActionResult> RemoveItemFromShoppingCart(int id)
         {
             var item = await _concertService.GetByIdAsync(id);
